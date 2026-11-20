@@ -1,0 +1,37 @@
+
+# Control de versiones
+.git/
+.gitignore
+
+# Credenciales y variables de entorno
+.env
+.env.*
+!.env.example
+
+# Entornos virtuales de Python
+.venv/
+venv/
+env/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+
+# Configuración del editor
+.vscode/
+.idea/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de registro
+*.log
+
+# Archivos de documentación
+docs/
+
+# Archivos de pruebas y caché
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
