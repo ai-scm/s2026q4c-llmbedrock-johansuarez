@@ -2,7 +2,8 @@
 
 import streamlit as st
 
-from app.chat import add_message
+from app.chat import add_message, prepare_conversation
+from app.bedrock_client import generate_response
 from app.profiles import PROFILES
 
 
@@ -43,7 +44,7 @@ for message in st.session_state.messages:
 
 # Recibir mensajes del usuario.
 if user_message := st.chat_input("Escribe tu pregunta..."):
-    # Registrar el mensaje del usuario.
+    # Guardar y mostrar el mensaje del usuario.
     add_message(
         history=st.session_state.messages,
         role="user",
@@ -53,18 +54,27 @@ if user_message := st.chat_input("Escribe tu pregunta..."):
     with st.chat_message("user"):
         st.write(user_message)
 
-    # Respuesta simulada para verificar el flujo conversacional.
-    assistant_response = (
-        f"Soy {PROFILES[selected_profile]['name']}. "
-        "He recibido tu mensaje correctamente."
-    )
-
-    # Registrar la respuesta del asistente.
-    add_message(
-        history=st.session_state.messages,
-        role="assistant",
-        content=assistant_response,
-    )
-
+    # Generar una respuesta real con Amazon Bedrock.
     with st.chat_message("assistant"):
-        st.write(assistant_response)
+        with st.spinner("Pensando..."):
+            try:
+                conversation = prepare_conversation(
+                    profile_id=selected_profile,
+                    history=st.session_state.messages,
+                )
+
+                assistant_response = generate_response(conversation)
+
+                add_message(
+                    history=st.session_state.messages,
+                    role="assistant",
+                    content=assistant_response,
+                )
+
+                st.write(assistant_response)
+
+            except Exception:
+                st.error(
+                    "No se pudo generar la respuesta. "
+                    "Comprueba la conexión y la configuración de Bedrock."
+                )
