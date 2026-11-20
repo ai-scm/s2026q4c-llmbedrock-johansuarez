@@ -1,0 +1,36 @@
+/* Burbujas de conversación */
+
+[class*="st-key-user_message_"] {
+    background-color: #F2F4F7;
+    border-radius: 12px;
+    padding: 18px 20px;
+    overflow-wrap: anywhere;
+}
+
+[class*="st-key-assistant_message_"] {
+    background-color: #EFF6FF;
+    border-radius: 12px;
+    padding: 18px 20px;
+    overflow-wrap: anywhere;
+}
+
+.st-key-user_message p,
+.st-key-assistant_message p {
+    line-height: 1.55;
+    margin-bottom: 0;
+}
+
+/* Fondo de la barra lateral */
+[data-testid="stSidebar"] {
+    background-color: #F7F9FC;
+}
+
+/* Encabezados de la barra lateral */
+[data-testid="stSidebar"] h3 {
+    color: #2563EB;
+}
+
+/* Texto secundario */
+[data-testid="stSidebar"] [data-testid="stCaptionContainer"] {
+    color: #667085;
+}
