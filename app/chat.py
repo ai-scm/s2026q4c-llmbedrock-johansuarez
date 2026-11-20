@@ -15,3 +15,23 @@ def prepare_conversation(
         "system": [{"text": system_prompt}],
         "messages": history.copy(),
     }
+
+def add_message(
+    history: list[dict],
+    role: str,
+    content: str,
+) -> None:
+    """Añade un mensaje al historial de conversación."""
+
+    if role not in ("user", "assistant"):
+        raise ValueError("El rol debe ser 'user' o 'assistant'.")
+
+    if not content.strip():
+        raise ValueError("El mensaje no puede estar vacío.")
+
+    history.append(
+        {
+            "role": role,
+            "content": [{"text": content}],
+        }
+    )

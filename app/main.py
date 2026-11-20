@@ -2,6 +2,7 @@
 
 import streamlit as st
 
+from app.chat import add_message
 from app.profiles import PROFILES
 
 
@@ -42,12 +43,28 @@ for message in st.session_state.messages:
 
 # Recibir mensajes del usuario.
 if user_message := st.chat_input("Escribe tu pregunta..."):
-    new_message = {
-        "role": "user",
-        "content": [{"text": user_message}],
-    }
-
-    st.session_state.messages.append(new_message)
+    # Registrar el mensaje del usuario.
+    add_message(
+        history=st.session_state.messages,
+        role="user",
+        content=user_message,
+    )
 
     with st.chat_message("user"):
         st.write(user_message)
+
+    # Respuesta simulada para verificar el flujo conversacional.
+    assistant_response = (
+        f"Soy {PROFILES[selected_profile]['name']}. "
+        "He recibido tu mensaje correctamente."
+    )
+
+    # Registrar la respuesta del asistente.
+    add_message(
+        history=st.session_state.messages,
+        role="assistant",
+        content=assistant_response,
+    )
+
+    with st.chat_message("assistant"):
+        st.write(assistant_response)
